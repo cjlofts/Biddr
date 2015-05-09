@@ -1,8 +1,12 @@
 class BidsController < ApplicationController
 
+  def index
+    @bids = current_user.bids
+  end
+
   def create
     @auction = Auction.find params[:auction_id]
-    @bid = Bid.new(bid_params)
+    @bid = current_user.bids.new(bid_params)
     @bid.auction = @auction
     if @auction.bids.count == 0 || (@bid.amount > @auction.bids.maximum(:amount))
       if @bid.save

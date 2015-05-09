@@ -7,17 +7,22 @@
   </div>
   <hr>
 
-  <div>
-    <%= simple_form_for [@auction, @bid] do |f| %>
-      <%= f.input :amount %>
-      <%= f.submit "Submit Bid", class: "btn btn-info" %>
-    <% end %>
-  </div>
-  <hr>
+  <% if current_user != @auction.user %>
+    <div>
+      <%= simple_form_for [@auction, @bid] do |f| %>
+        <%= f.input :amount %>
+        <%= f.submit "Submit Bid", class: "btn btn-info" %>
+      <% end %>
+    </div>
+    <hr>
+  <% end %>
 
   <% @bids.highest_first.each do |bid| %>
     <div class="well">
-      <p><%= link_to bid.amount  %></p>
+      <p>$<%= link_to bid.amount  %></p>
+      <% if bid.user.present? %>
+        <p>Bid By: <%= bid.user.name_display %></p>
+      <% end %>
     </div>
   <% end %>
 </div>

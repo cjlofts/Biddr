@@ -6,6 +6,7 @@ class Auction < ActiveRecord::Base
   validates :reserve_price, numericality: {greater_than_or_equal_to: 1}
   validates :ends_on, presence: true
 
+  belongs_to :user
   has_many :bids
 
   aasm whiny_transitions: false do

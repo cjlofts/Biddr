@@ -1,0 +1,9 @@
+<h1>All My Bids</h1>
+
+<% @bids.each do |bid| %>
+  <div class="well">
+    <p>You Bid: $<%= bid.amount %></p>
+    <p>At: <%= bid.created_at %></p>
+    <p>For the auction: <%= link_to bid.auction.title, auction_path(bid.auction) %></p>
+  </div>
+<% end %>

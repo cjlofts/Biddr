@@ -1,4 +1,5 @@
 class AuctionsController < ApplicationController
+  before_action :authenticate_user!, except: [:index]
   before_action :find_auction, only: [:show, :edit, :update, :destroy]
 
   def index
@@ -10,7 +11,7 @@ class AuctionsController < ApplicationController
   end
 
   def create
-    @auction = Auction.new(auction_params)
+    @auction = current_user.auctions.new(auction_params)
     if @auction.save
       redirect_to @auction, notice: "Auction Created!"
     else
