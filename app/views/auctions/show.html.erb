@@ -1,1 +1,33 @@
-<h1>Auction Show Page</h1>
+<div class="col-md-8">
+  <h1><%= @auction.title %></h1>
+
+  <div>
+    <h3>Details: <%= @auction.details %></h3>
+    <h3>Reserve Price: <%= @auction.reserve_price %></h3>
+  </div>
+  <hr>
+
+  <div>
+    <%= simple_form_for [@auction, @bid] do |f| %>
+      <%= f.input :amount %>
+      <%= f.submit "Submit Bid", class: "btn btn-info" %>
+    <% end %>
+  </div>
+  <hr>
+
+  <% @bids.highest_first.each do |bid| %>
+    <div class="well">
+      <p><%= link_to bid.amount  %></p>
+    </div>
+  <% end %>
+</div>
+
+<div class="col-md-4">
+  <div class="well">
+    <% if @auction.bids.any? %>
+      <p>Current Price: <%= number_to_currency(@auction.bids.maximum(:amount) + 1) %></p>
+    <% else %>
+      <p>There have been no bids yet. Be the first!</p>
+    <% end %>
+  </div>
+</div>

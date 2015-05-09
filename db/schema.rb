@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150508172627) do
+ActiveRecord::Schema.define(version: 20150509002525) do
 
   create_table "auctions", force: :cascade do |t|
     t.string   "title"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150508172627) do
     t.integer  "reserve_price"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.string   "aasm_state"
   end
 
   create_table "bids", force: :cascade do |t|

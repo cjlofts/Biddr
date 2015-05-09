@@ -4,11 +4,19 @@ class BidsController < ApplicationController
     @auction = Auction.find params[:auction_id]
     @bid = Bid.new(bid_params)
     @bid.auction = @auction
-    if @bid.save
-      redirect_to @auction, notice: "Bid Created!"
+    if @auction.bids.count == 0 || @bid.amount > @auction.bids.maximum(:amount)
+      if @bid.save
+        if @bid.amount > @auction.reserve_price
+          @auction.meet_reserve
+        end
+        redirect_to @auction, notice: "Bid Created!"
+      else
+        flash[:alert] = "Bid Not Created"
+        render "auctions/show"
+      end
     else
-      flash[:alert] = "Bid Not Created"
-      render "auctions/show"
+      flash[:alert] = "Bid must be higher than $#{@auction.bids.maximum(:amount)}.00"
+      redirect_to @auction
     end
   end
 
@@ -26,16 +34,3 @@ class BidsController < ApplicationController
   end
 
 end
-
-# def create
-#     @campaign        = Campaign.find params[:campaign_id]
-#     @pledge          = Pledge.new pledge_params
-#     @pledge.user     = current_user
-#     @pledge.campaign = @campaign
-#     if @pledge.save
-#       redirect_to new_pledge_payment_path(@pledge), notice: "Pledge created"
-#     else
-#       flash[:alert] = "Pledge not created"
-#       render "campaigns/show"
-#     end
-#   end

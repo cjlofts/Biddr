@@ -20,6 +20,8 @@ class AuctionsController < ApplicationController
   end
 
   def show
+    @bid = Bid.new
+    @bids = @auction.bids
   end
 
   def edit

@@ -1,1 +1,9 @@
-<h1>Auctions Index</h1>
+<h1>Select An Auction To Bid On!</h1>
+
+<% @auctions.each do |auction| %>
+  <div class="well">
+    <p><%= link_to auction.title, auction_path(auction)  %></p>
+    <p><%= auction.details %></p>
+    <p><%= auction.ends_on %></p>
+  </div>
+<% end %>
