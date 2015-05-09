@@ -4,5 +4,6 @@ Rails.application.routes.draw do
 
   resources :auctions do
     resources :bids
+    resources :meet_reserves
   end
 end

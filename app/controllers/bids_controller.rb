@@ -4,10 +4,11 @@ class BidsController < ApplicationController
     @auction = Auction.find params[:auction_id]
     @bid = Bid.new(bid_params)
     @bid.auction = @auction
-    if @auction.bids.count == 0 || @bid.amount > @auction.bids.maximum(:amount)
+    if @auction.bids.count == 0 || (@bid.amount > @auction.bids.maximum(:amount))
       if @bid.save
-        if @bid.amount > @auction.reserve_price
+        if @bid.amount >= @auction.reserve_price
           @auction.meet_reserve
+          @auction.save
         end
         redirect_to @auction, notice: "Bid Created!"
       else

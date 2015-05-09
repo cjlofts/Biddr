@@ -9,7 +9,7 @@ class Auction < ActiveRecord::Base
   has_many :bids
 
   aasm whiny_transitions: false do
-    state :publshed, initial: true
+    state :published, initial: true
     state :reserve_met
     state :won
     state :cancelled

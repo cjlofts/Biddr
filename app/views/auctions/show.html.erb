@@ -29,5 +29,12 @@
     <% else %>
       <p>There have been no bids yet. Be the first!</p>
     <% end %>
+    <% if @auction.aasm_state == "published" %>
+      <p>Reserve has not been met</p>
+    <% elsif @auction.aasm_state == "reserve_met" %>
+      <p>Reserve has been met!</p>
+    <% else %>
+      <p><%= @auction.aasm_state %></p>
+    <% end %>
   </div>
 </div>
